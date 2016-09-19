@@ -44,7 +44,7 @@ h1 {
 .pixCell {
   border: 1px dotted black;
   position: absolute;
-  background-color: white;
+  background-color: #FFFFFF;
 }
 
 .pixCell:hover {
@@ -57,6 +57,10 @@ h1 {
   border-radius: 4px;
   margin: 4px;
   box-shadow: -1px -1px 2px steelblue, 1px 1px 2px white;
+}
+
+#ppCanvas:hover {
+  cursor: url(pencil.png) 8 24, pointer;
 }
 
 #colorDiv {
@@ -101,5 +105,4 @@ button {
   background-color: lightsteelblue;
   border: 2px outset #6692C4;
   border-radius: 4px;
-  margin-right: 4px;
 }

@@ -17,12 +17,15 @@ function pixelPainter(width, height) {
   var saveButton = document.createElement('button');
   var fetchButton = document.createElement('button');
   var pencilButton = document.createElement('button');
+  var fillButton = document.createElement('button');
+  var fillQueue = [];
   var currentColor = 'black';
   var currentTool = 'pencil';
   var mouseIsDown = false;
 
   var tools = {
-    pencil: 'pencil'
+    pencil: 'pencil',
+    fill: 'fill'
   };
   var colors = {
     red: '#FF0000',
@@ -46,7 +49,7 @@ function pixelPainter(width, height) {
   module.clearCanvas = function(){
     var matches = document.body.querySelectorAll('.pixCell');
     for(var i = 0; i < matches.length; i++){
-      matches[i].style.backgroundColor = 'white';
+      matches[i].style.backgroundColor = colors.white;
     }
   };
 
@@ -55,7 +58,7 @@ function pixelPainter(width, height) {
     if(e.target.style.backgroundColor !== currentColor) {
       e.target.style.backgroundColor = currentColor;
     } else {
-      e.target.style.backgroundColor = 'white';
+      e.target.style.backgroundColor = colors.white;
     }
   };
 
@@ -69,6 +72,75 @@ function pixelPainter(width, height) {
     currentColor = e.target.style.backgroundColor;
     currentColorDisplay.innerHTML = currentColor;
     currentColorDisplay.style.backgroundColor = currentColor;
+  };
+
+  module.setPencil = function() {
+    currentTool = tools.pencil;
+  };
+
+  module.setFill = function() {
+    currentTool = tools.fill;
+    var cellQuery = document.body.querySelectorAll('.pixCell');
+    for(var y = 0; y < height; y++) {
+      var row = [];
+      for(var x = 0; x < width; x++) {
+        row.push(cellQuery[x + (y * height)]);
+      }
+      fillQueue.push(row);
+    }
+    console.log(fillQueue);
+  };
+
+  module.fill = function(e) {
+    if(currentTool != tools.fill) {
+      return;
+    }
+    var targetColor = e.target.style.backgroundColor;
+    if(targetColor === currentColor) {
+      return;
+    }
+    var node = fillQueue[parseInt(e.target.dataY)][parseInt(e.target.dataX)];
+    var queue = [];
+    var n = null;
+    var east, west, north, south;
+    queue.push(node);
+    while(queue.length > 0) {
+      n = queue[0];
+      queue.shift();
+      if(n.style.backgroundColor === currentColor) {
+        continue;
+      }
+      if(n.style.backgroundColor === targetColor) {
+        n.style.backgroundColor = currentColor;
+        n.dataProcessed = true;
+        west = fillQueue[n.dataY][parseInt(n.dataX) - 1];
+        east = fillQueue[n.dataY][parseInt(n.dataX) + 1];
+        if(west !== undefined && !west.dataProcessed) {
+          west.dataProcessed = true;
+          queue.push(west); //west
+        }
+        if(east !== undefined && !east.dataProcessed) {
+          east.dataProcessed = true;
+          queue.push(east); //east
+        }
+        if(parseInt(n.dataY) > 0) {
+          north = fillQueue[parseInt(n.dataY) - 1][n.dataX];
+          if(north !== undefined && !north.dataProcessed) {
+            north.dataProcessed = true;
+            queue.push(north); //north
+          }
+        }
+        if(parseInt(n.dataY) < (height - 1)) {
+          south = fillQueue[parseInt(n.dataY) + 1][n.dataX];
+          if(south !== undefined && !south.dataProcessed) {
+            south.dataProcessed = true;
+            queue.push(south); //south
+          }
+        }
+      }
+      console.log(queue.length);
+    }
+
   };
 
   module.saveData = function(){
@@ -100,12 +172,17 @@ function pixelPainter(width, height) {
         pixCell.className = 'pixCell';
         pixCell.style.width = pixelSize;
         pixCell.style.height = pixelSize;
+        pixCell.style.backgroundColor = colors.white;
         pixCell.style.left = (x * pixelSize) + 'px';
         pixCell.style.top = (y * pixelSize) + 'px';
+        pixCell.dataX = x;
+        pixCell.dataY = y;
+        pixCell.dataProcessed = false;
         //add touch response
         pixCell.addEventListener('touchstart', module.changeColor);
         pixCell.addEventListener('touchmove', module.changeColorContinuous);
         //add mouse response
+        pixCell.addEventListener('mousedown', module.fill);
         pixCell.addEventListener('mousedown', module.changeColor);
         pixCell.addEventListener('mouseover', module.changeColorContinuous);
         pixCell.addEventListener('dragover', function(evt) {
@@ -162,9 +239,13 @@ function pixelPainter(width, height) {
     fetchButton.innerHTML = '🗁';
     controlsDiv.appendChild(fetchButton);
 
-    pencilButton.addEventListener('click', function(){currentTool = tools.pencil;});
+    pencilButton.addEventListener('click', module.setPencil);
     pencilButton.innerHTML = '🖉';
     controlsDiv.appendChild(pencilButton);
+
+    fillButton.addEventListener('click', module.setFill);
+    fillButton.innerHTML = '🌢';
+    controlsDiv.appendChild(fillButton);
 
     //turn off continuous drawing when mouse is released
     document.addEventListener('mouseup', function() {mouseIsDown = false;});
