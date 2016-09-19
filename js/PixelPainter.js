@@ -55,11 +55,7 @@ function pixelPainter(width, height) {
 
   module.changeColor = function(e) {
     mouseIsDown = true;
-    if(e.target.style.backgroundColor !== currentColor) {
-      e.target.style.backgroundColor = currentColor;
-    } else {
-      e.target.style.backgroundColor = colors.white;
-    }
+    e.target.style.backgroundColor = currentColor;
   };
 
   module.changeColorContinuous = function(e) {
@@ -88,7 +84,6 @@ function pixelPainter(width, height) {
       }
       fillQueue.push(row);
     }
-    console.log(fillQueue);
   };
 
   module.fill = function(e) {
@@ -138,7 +133,6 @@ function pixelPainter(width, height) {
           }
         }
       }
-      console.log(queue.length);
     }
 
   };
