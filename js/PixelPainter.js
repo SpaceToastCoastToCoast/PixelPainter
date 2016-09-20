@@ -134,7 +134,11 @@ function pixelPainter(width, height) {
         }
       }
     }
-
+    //reset all processed bits to false
+    var canvasList = document.body.querySelectorAll('.pixCell');
+    for(var l in canvasList) {
+      canvasList[l].dataProcessed = false;
+    }
   };
 
   module.saveData = function(){
