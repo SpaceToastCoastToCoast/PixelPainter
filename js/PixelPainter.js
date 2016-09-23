@@ -276,27 +276,27 @@ function pixelPainter(width, height) {
     currentColorDisplay.style.height = swatchSize + 'px';
 
     clearButton.addEventListener('click', module.clearCanvas);
-    clearButton.innerHTML = '🗙';
+    clearButton.innerHTML = '🗙 clear';
     controlsDiv.appendChild(clearButton);
 
     saveButton.addEventListener('click', module.saveData);
-    saveButton.innerHTML = '💾';
+    saveButton.innerHTML = '💾 save';
     controlsDiv.appendChild(saveButton);
 
     fetchButton.addEventListener('click', module.getData);
-    fetchButton.innerHTML = '🗁';
+    fetchButton.innerHTML = '🗁 load';
     controlsDiv.appendChild(fetchButton);
 
     pencilButton.addEventListener('click', module.setPencil);
-    pencilButton.innerHTML = '🖉';
+    pencilButton.innerHTML = '🖉 pen';
     controlsDiv.appendChild(pencilButton);
 
     fillButton.addEventListener('click', module.setFill);
-    fillButton.innerHTML = '🌢';
+    fillButton.innerHTML = '🌢 fill';
     controlsDiv.appendChild(fillButton);
 
     shareButton.addEventListener('click', module.sharePicture);
-    shareButton.innerHTML = 'Share';
+    shareButton.innerHTML = 'share';
     controlsDiv.appendChild(shareButton);
 
     //turn off continuous drawing when mouse is released
