@@ -23,6 +23,7 @@ function pixelPainter(width, height) {
   var currentColor = 'black';
   var currentTool = 'pencil';
   var mouseIsDown = false;
+  var alerted = false;
 
   var tools = {
     pencil: 'pencil',
@@ -297,7 +298,10 @@ function pixelPainter(width, height) {
 
     shareButton.addEventListener('click', function() {
       module.sharePicture();
-      setTimeout(alert('Copy the URL in the address bar to share your picture'), 500);
+      if(!alerted) {
+        setTimeout(alert('Copy the URL in the address bar to share your picture'), 500);
+        alerted = true;
+      }
     });
     shareButton.innerHTML = 'share';
     controlsDiv.appendChild(shareButton);
