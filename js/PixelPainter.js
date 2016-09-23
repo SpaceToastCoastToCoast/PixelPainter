@@ -295,7 +295,10 @@ function pixelPainter(width, height) {
     fillButton.innerHTML = '🌢 fill';
     controlsDiv.appendChild(fillButton);
 
-    shareButton.addEventListener('click', module.sharePicture);
+    shareButton.addEventListener('click', function() {
+      module.sharePicture();
+      setTimeout(alert('Copy the URL in the address bar to share your picture'), 500);
+    });
     shareButton.innerHTML = 'share';
     controlsDiv.appendChild(shareButton);
 
