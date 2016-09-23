@@ -299,7 +299,7 @@ function pixelPainter(width, height) {
     shareButton.addEventListener('click', function() {
       module.sharePicture();
       if(!alerted) {
-        setTimeout(alert('Copy the URL in the address bar to share your picture'), 500);
+        setTimeout(alert('When you hit the Share button, a URL for your picture is generated in the address bar. Copy this URL to share your picture'), 500);
         alerted = true;
       }
     });
