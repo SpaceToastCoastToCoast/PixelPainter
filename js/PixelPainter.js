@@ -40,7 +40,7 @@ function pixelPainter(width, height) {
     white: 'rgb(255, 255, 255)',
     pink: 'rgb(255, 192, 203)',
     peach: 'rgb(255, 218, 185)',
-    lightyellow: 'rgb(255, 248, 0)',
+    lightyellow: 'rgb(255, 248, 220)',
     lightgreen: 'rgb(144, 238, 144)',
     lightblue: 'rgb(0, 191, 255)',
     lightpurple: 'rgb(147, 112, 219)',

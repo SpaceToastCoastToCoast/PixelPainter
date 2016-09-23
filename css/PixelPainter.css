@@ -15,7 +15,8 @@ body h1, body #pixelPainter {
   margin-bottom: 0px;
   margin-left: 20%;
   margin-right: 20%;
-  box-shadow: 1px 1px 2px darkslateblue, -1px -1px 2px white
+  min-width: 420px;
+  box-shadow: 1px 1px 2px darkslateblue, -1px -1px 2px white;
 }
 
 #pixelPainter {
