@@ -148,6 +148,11 @@ function pixelPainter(width, height) {
       dataArray.push(pixelData[i].style.backgroundColor);
     }
     localStorage.setItem('pixStorage',JSON.stringify(dataArray)); // this saves data to local storage
+    window.location.hash = md5(localStorage.getItem('pixStorage'));
+  };
+
+  module.sharePicture = function(){
+    window.location.hash = localStorage.getItem('pixStorage');
   };
 
   module.getData = function(){
