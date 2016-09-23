@@ -99,10 +99,12 @@ h1 {
 
 button {
   font-family: 'Quicksand';
-  font-size: 12px;
+  font-size: 15px;
   font-weight: bold;
   color: steelblue;
   background-color: lightsteelblue;
-  border: 2px outset #6692C4;
+  border: none;
+  margin: 2px;
   border-radius: 4px;
+  box-shadow: 1px 1px 2px steelblue, -1px -1px 2px white;
 }
