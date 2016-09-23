@@ -46,6 +46,9 @@ function pixelPainter(width, height) {
     brown: 'rgb(139, 69, 19)',
     tan: 'rgb(205, 133, 63)'
   };
+  var colorsToArray = Object.keys(colors).map(function(key) {
+    return colors[key];
+  });
 
   module.clearCanvas = function(){
     var matches = document.body.querySelectorAll('.pixCell');
@@ -154,21 +157,16 @@ function pixelPainter(width, height) {
   module.sharePicture = function(){
     module.saveData();
     var data = JSON.parse(localStorage.getItem('pixStorage'));
-    var colorsToArray = Object.keys(colors).map(function(key) {
-      return colors[key];
-    });
     var parsedData = data.map(function(pixelColor) {
       return colorsToArray.indexOf(pixelColor).toString(16);
     });
     //now we reduce the parsed data into a string
-    module.encode(parsedData.join(''));
-    //window.location.hash = module.encode(parsedData);
+    window.location.hash = module.encode(parsedData.join(''));
   };
 
   module.encode = function(input) {
     var encoding = [];
     var prev, count, i;
-    console.log(input[0]);
     for(count = 1, prev = input[0], i = 1; i < input.length; i++) {
       if(input[i] != prev) {
         //count and value are separated by H
@@ -182,8 +180,26 @@ function pixelPainter(width, height) {
     encoding.push([count, prev].join('H'));
     //runlines are saparated by G
     var encodedStr = encoding.join('G');
-    console.log(encodedStr.length);
     return encodedStr;
+  };
+
+  module.decode = function(encoded) {
+    var output = [];
+    firstSplit = encoded.slice(1).split('G');
+    firstSplit.forEach(function(node) {
+      var pair = node.split('H');
+      for(var i = 0; i < pair[0]; i++) {
+        output.push (pair[1]);
+      }
+    });
+    var indexedToColors = output.map(function(colorIndex) {
+      return colorsToArray[parseInt(colorIndex, 16)];
+    });
+    var matches = document.body.querySelectorAll('.pixCell');
+    for(var i = 0; i < matches.length; i++){
+      matches[i].style.backgroundColor = indexedToColors[i];
+    }
+    return output;
   };
 
   module.getData = function(){
@@ -225,9 +241,6 @@ function pixelPainter(width, height) {
         ppCanvas.appendChild(pixCell);
       }
     }
-    module.clearCanvas();
-    //if(window.location.hash.length > 0)
-    //module.loadImageFromHash();
   };
 
   module.createColorSwatch = function() {
@@ -299,6 +312,10 @@ function pixelPainter(width, height) {
     colorDiv.appendChild(controlsDiv);
     ppDiv.appendChild(colorDiv);
     ppDiv.appendChild(ppCanvas);
+    module.clearCanvas();
+    if(window.location.hash.length > 0) {
+      module.decode(window.location.hash);
+    }
   };
 
   module.initialize();
