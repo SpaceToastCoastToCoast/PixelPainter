@@ -1,7 +1,6 @@
 PixelPainter
 ============
-####GitHub Pages Link
-[gh-pages](https://spacetoastcoasttocoast.github.io/PixelPainter/)
+[View on GitHub Pages](https://spacetoastcoasttocoast.github.io/PixelPainter/)
 
 ##Description
 PixelPainter is a simple paint application using pure CSS, HTML and JavaScript. Use the pen and fill bucket tools to create images and use the share button to share your pictures as a shareable link. The default canvas is 32 units by 32 units, with each unit taking up 8 square pixels of real space.
