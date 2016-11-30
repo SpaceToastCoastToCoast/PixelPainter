@@ -1,6 +1,6 @@
 PixelPainter
 ============
-#GitHub Pages Link
+####GitHub Pages Link
 [gh-pages](https://spacetoastcoasttocoast.github.io/PixelPainter/)
 
 ##Description
