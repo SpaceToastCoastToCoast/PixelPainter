@@ -1,30 +1,20 @@
 PixelPainter
 ============
+[View on GitHub Pages](https://spacetoastcoasttocoast.github.io/PixelPainter/)
 
-> Coloring pixels in a grid
+##Description
+PixelPainter is a simple paint application using pure CSS, HTML and JavaScript. Use the pen and fill bucket tools to create images and use the share button to share your pictures as a shareable link. The default canvas is 32 units by 32 units, with each unit taking up 8 square pixels of real space.
 
-![sketch](http://i.imgur.com/6kLmYWp.png)
-
-PixelPainter is a plugin that you will create. It has a color swatch of infinite colors and a grid of infinite size! When a user clicks on a color from the swatch they can paint the color on the pixel grid! There should also be two buttons, one for erasing a color and the other to clear the entire canvas.
-
-## Getting Started and Specs
-
-### PixelPainter(_width_, _height_)
-When instatiated it appends a new PixelPainter object to a HTML div element with an id of **pp-canvas**.
-
-**note**: you can use either the _Module_ or _Classical_ OOP Patterns for this.
-
-The `height` and `width` attributes set the size of the **canvas**. Each cell of the canvas can be any width or height you choose but it should be a square.
-
-The height and width of the **color swatch** will be determined by the colors available which you, the developer, will set.
-
-Do not edit the `index.html` file. You will generate all of your html markup using the [DOM API](https://slides.com/joecarlson/dom-dom-dom-dom).
-
-## Stretch Goals
-1. Code Review with an instructor or TA
-2. Make the app responsive to tablets and mobile devices using media queries
-3. Make it 'portfolio quality'
-4. Implment stamps or shapes
-5. Implement a fill option that fills a shape with a color.
-5. Write a function that saves the data pixel grid.
-6. Deploy the app using [Github pages](https://help.github.com/articles/creating-project-pages-manually/)
+###Features
+#####Drag-to-draw
+Click and drag on the canvas to draw in a continuous path.
+#####Fill bucket
+The fill bucket tool implements breadth-first search to fill all pixels of the same color within a bordered area.
+#####Clear
+Click this to reset all pixels to white.
+#####Save
+Save your image to your browser's local storage.
+#####Load
+Load an image from your browser's local storage.
+#####Share
+Generates a shareable URL of the currently displayed image that you can send to others.

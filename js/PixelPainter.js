@@ -18,33 +18,38 @@ function pixelPainter(width, height) {
   var fetchButton = document.createElement('button');
   var pencilButton = document.createElement('button');
   var fillButton = document.createElement('button');
+  var shareButton = document.createElement('button');
   var fillQueue = [];
   var currentColor = 'black';
   var currentTool = 'pencil';
   var mouseIsDown = false;
+  var alerted = false;
 
   var tools = {
     pencil: 'pencil',
     fill: 'fill'
   };
   var colors = {
-    red: '#FF0000',
-    orange: '#FFA500',
-    yellow: '#FFE000',
-    green: '#3CB371',
-    blue: '#4169E1',
-    purple: '#483D8B',
-    black: '#000000',
-    white: '#FFFFFF',
-    pink: '#FFC0CB',
-    peach: '#FFDAB9',
-    lightyellow: 'FFF8DC',
-    lightgreen: '#90EE90',
-    lightblue: '#00BFFF',
-    lightpurple: '#9370DB',
-    brown: '#8B4513',
-    tan: '#CD853F'
+    red: 'rgb(255, 0, 0)',
+    orange: 'rgb(255, 165, 0)',
+    yellow: 'rgb(255, 224, 0)',
+    green: 'rgb(60, 179, 113)',
+    blue: 'rgb(65, 105, 225)',
+    purple: 'rgb(72, 61, 139)',
+    black: 'rgb(0, 0, 0)',
+    white: 'rgb(255, 255, 255)',
+    pink: 'rgb(255, 192, 203)',
+    peach: 'rgb(255, 218, 185)',
+    lightyellow: 'rgb(255, 248, 220)',
+    lightgreen: 'rgb(144, 238, 144)',
+    lightblue: 'rgb(0, 191, 255)',
+    lightpurple: 'rgb(147, 112, 219)',
+    brown: 'rgb(139, 69, 19)',
+    tan: 'rgb(205, 133, 63)'
   };
+  var colorsToArray = Object.keys(colors).map(function(key) {
+    return colors[key];
+  });
 
   module.clearCanvas = function(){
     var matches = document.body.querySelectorAll('.pixCell');
@@ -150,10 +155,56 @@ function pixelPainter(width, height) {
     localStorage.setItem('pixStorage',JSON.stringify(dataArray)); // this saves data to local storage
   };
 
+  module.sharePicture = function(){
+    module.saveData();
+    var data = JSON.parse(localStorage.getItem('pixStorage'));
+    var parsedData = data.map(function(pixelColor) {
+      return colorsToArray.indexOf(pixelColor).toString(16);
+    });
+    //now we reduce the parsed data into a string
+    window.location.hash = module.encode(parsedData.join(''));
+  };
+
+  module.encode = function(input) {
+    var encoding = [];
+    var prev, count, i;
+    for(count = 1, prev = input[0], i = 1; i < input.length; i++) {
+      if(input[i] != prev) {
+        //count and value are separated by H
+        encoding.push([count,prev].join('H'));
+        count = 1;
+        prev = input[i];
+      } else {
+        count++;
+      }
+    }
+    encoding.push([count, prev].join('H'));
+    //runlines are saparated by G
+    var encodedStr = encoding.join('G');
+    return encodedStr;
+  };
+
+  module.decode = function(encoded) {
+    var output = [];
+    firstSplit = encoded.slice(1).split('G');
+    firstSplit.forEach(function(node) {
+      var pair = node.split('H');
+      for(var i = 0; i < pair[0]; i++) {
+        output.push (pair[1]);
+      }
+    });
+    var indexedToColors = output.map(function(colorIndex) {
+      return colorsToArray[parseInt(colorIndex, 16)];
+    });
+    var matches = document.body.querySelectorAll('.pixCell');
+    for(var i = 0; i < matches.length; i++){
+      matches[i].style.backgroundColor = indexedToColors[i];
+    }
+    return output;
+  };
+
   module.getData = function(){
     var data = JSON.parse(localStorage.getItem('pixStorage'));
-    console.log("getdata",data);
-    console.log(data);
     var matches = document.body.querySelectorAll('.pixCell');
     for(var i = 0; i < matches.length; i++){
       matches[i].style.backgroundColor = data[i];
@@ -226,24 +277,34 @@ function pixelPainter(width, height) {
     currentColorDisplay.style.height = swatchSize + 'px';
 
     clearButton.addEventListener('click', module.clearCanvas);
-    clearButton.innerHTML = '🗙';
+    clearButton.innerHTML = '🗙 clear';
     controlsDiv.appendChild(clearButton);
 
     saveButton.addEventListener('click', module.saveData);
-    saveButton.innerHTML = '💾';
+    saveButton.innerHTML = '💾 save';
     controlsDiv.appendChild(saveButton);
 
     fetchButton.addEventListener('click', module.getData);
-    fetchButton.innerHTML = '🗁';
+    fetchButton.innerHTML = '🗁 load';
     controlsDiv.appendChild(fetchButton);
 
     pencilButton.addEventListener('click', module.setPencil);
-    pencilButton.innerHTML = '🖉';
+    pencilButton.innerHTML = '🖉 pen';
     controlsDiv.appendChild(pencilButton);
 
     fillButton.addEventListener('click', module.setFill);
-    fillButton.innerHTML = '🌢';
+    fillButton.innerHTML = '🌢 fill';
     controlsDiv.appendChild(fillButton);
+
+    shareButton.addEventListener('click', function() {
+      module.sharePicture();
+      if(!alerted) {
+        setTimeout(alert('When you hit the Share button, a URL for your picture is generated in the address bar. Copy this URL to share your picture'), 500);
+        alerted = true;
+      }
+    });
+    shareButton.innerHTML = 'share';
+    controlsDiv.appendChild(shareButton);
 
     //turn off continuous drawing when mouse is released
     document.addEventListener('mouseup', function() {mouseIsDown = false;});
@@ -258,6 +319,10 @@ function pixelPainter(width, height) {
     colorDiv.appendChild(controlsDiv);
     ppDiv.appendChild(colorDiv);
     ppDiv.appendChild(ppCanvas);
+    module.clearCanvas();
+    if(window.location.hash.length > 0) {
+      module.decode(window.location.hash);
+    }
   };
 
   module.initialize();
@@ -265,4 +330,4 @@ function pixelPainter(width, height) {
   return module;
 }
 
-var pp = pixelPainter(64, 64);
+var pp = pixelPainter(32, 32);
