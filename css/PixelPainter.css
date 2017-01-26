@@ -46,6 +46,8 @@ h1 {
   border: 1px dotted black;
   position: absolute;
   background-color: #FFFFFF;
+  width: 8px;
+  height: 8px;
 }
 
 .pixCell:hover {
