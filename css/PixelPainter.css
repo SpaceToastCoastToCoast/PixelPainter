@@ -46,6 +46,8 @@ h1 {
   border: 1px dotted black;
   position: absolute;
   background-color: #FFFFFF;
+  width: 8px;
+  height: 8px;
 }
 
 .pixCell:hover {
@@ -58,6 +60,7 @@ h1 {
   border-radius: 4px;
   margin: 4px;
   box-shadow: -1px -1px 2px steelblue, 1px 1px 2px white;
+  min-height: 128px;
 }
 
 #ppCanvas:hover {
