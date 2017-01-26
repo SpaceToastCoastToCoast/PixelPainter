@@ -60,7 +60,7 @@ h1 {
   border-radius: 4px;
   margin: 4px;
   box-shadow: -1px -1px 2px steelblue, 1px 1px 2px white;
-  min-height: 128px;
+  min-height: 256px;
 }
 
 #ppCanvas:hover {
@@ -71,7 +71,7 @@ h1 {
   position: fixed;
   background-color: #A8BCD7;
   box-shadow: -1px -1px 2px steelblue, 1px 1px 2px white;
-  margin-top: 4px;
+  margin-top: 16px;
   margin-left: 20%;
   margin-right: 20%;
   border-radius: 4px;
