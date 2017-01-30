@@ -2,6 +2,8 @@
 
 html {
   background-color: steelblue;
+  background-image: url(background.png);
+  background-repeat: repeat;
 }
 
 @font-face {
