@@ -82,7 +82,7 @@ function pixelPainter(width, height) {
 
   module.setFill = function() {
     currentTool = tools.fill;
-    document.getElementById('ppCanvas').className = "pencil";
+    document.getElementById('ppCanvas').className = "bucket";
     var cellQuery = document.body.querySelectorAll('.pixCell');
     for(var y = 0; y < height; y++) {
       var row = [];
