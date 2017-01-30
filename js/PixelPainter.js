@@ -77,10 +77,12 @@ function pixelPainter(width, height) {
 
   module.setPencil = function() {
     currentTool = tools.pencil;
+    document.getElementById('ppCanvas').className = "pencil";
   };
 
   module.setFill = function() {
     currentTool = tools.fill;
+    document.getElementById('ppCanvas').className = "bucket";
     var cellQuery = document.body.querySelectorAll('.pixCell');
     for(var y = 0; y < height; y++) {
       var row = [];
@@ -262,6 +264,7 @@ function pixelPainter(width, height) {
     ppCanvas.style.width = (width * pixelSize) + 2;
     ppCanvas.style.height = (height * pixelSize) + 2;
     ppCanvas.id = 'ppCanvas';
+    ppCanvas.className = 'pencil';
 
     colorDiv.style.width = (8 * swatchSize) + (swatchSize) + 'px';
     colorDiv.id = 'colorDiv';

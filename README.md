@@ -1,5 +1,7 @@
 PixelPainter
 ============
+![](https://github.com/SpaceToastCoastToCoast/PixelPainter/blob/master/pp-scr1.png)
+
 [View on GitHub Pages](https://spacetoastcoasttocoast.github.io/PixelPainter/)
 
 ##Description
