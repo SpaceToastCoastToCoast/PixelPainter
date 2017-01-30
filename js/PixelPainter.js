@@ -77,10 +77,12 @@ function pixelPainter(width, height) {
 
   module.setPencil = function() {
     currentTool = tools.pencil;
+    document.getElementById('ppCanvas').className = "pencil";
   };
 
   module.setFill = function() {
     currentTool = tools.fill;
+    document.getElementById('ppCanvas').className = "bucket";
     var cellQuery = document.body.querySelectorAll('.pixCell');
     for(var y = 0; y < height; y++) {
       var row = [];
@@ -248,12 +250,12 @@ function pixelPainter(width, height) {
     for(var col in colors){
       var pixColor = document.createElement('div');
       pixColor.className = 'colorSwatch';
-      pixColor.addEventListener('click', module.storeColor);
       pixColor.style.backgroundColor = colors[col];
       pixColor.style.width = swatchSize + 'px';
       pixColor.style.height = swatchSize + 'px';
 
       colorDiv.appendChild(pixColor);
+      pixColor.addEventListener('click', module.storeColor);
     }
   };
 
@@ -262,6 +264,7 @@ function pixelPainter(width, height) {
     ppCanvas.style.width = (width * pixelSize) + 2;
     ppCanvas.style.height = (height * pixelSize) + 2;
     ppCanvas.id = 'ppCanvas';
+    ppCanvas.className = 'pencil';
 
     colorDiv.style.width = (8 * swatchSize) + (swatchSize) + 'px';
     colorDiv.id = 'colorDiv';
@@ -276,23 +279,18 @@ function pixelPainter(width, height) {
     currentColorDisplay.style.backgroundColor = currentColor;
     currentColorDisplay.style.height = swatchSize + 'px';
 
-    clearButton.addEventListener('click', module.clearCanvas);
     clearButton.innerHTML = '🗙 clear';
     controlsDiv.appendChild(clearButton);
 
-    saveButton.addEventListener('click', module.saveData);
     saveButton.innerHTML = '💾 save';
     controlsDiv.appendChild(saveButton);
 
-    fetchButton.addEventListener('click', module.getData);
     fetchButton.innerHTML = '🗁 load';
     controlsDiv.appendChild(fetchButton);
 
-    pencilButton.addEventListener('click', module.setPencil);
     pencilButton.innerHTML = '🖉 pen';
     controlsDiv.appendChild(pencilButton);
-
-    fillButton.addEventListener('click', module.setFill);
+    
     fillButton.innerHTML = '🌢 fill';
     controlsDiv.appendChild(fillButton);
 
@@ -323,6 +321,11 @@ function pixelPainter(width, height) {
     if(window.location.hash.length > 0) {
       module.decode(window.location.hash);
     }
+    clearButton.addEventListener('click', module.clearCanvas);
+    saveButton.addEventListener('click', module.saveData);
+    fetchButton.addEventListener('click', module.getData);
+    pencilButton.addEventListener('click', module.setPencil);
+    fillButton.addEventListener('click', module.setFill);
   };
 
   module.initialize();
@@ -330,4 +333,6 @@ function pixelPainter(width, height) {
   return module;
 }
 
-var pp = pixelPainter(32, 32);
+window.addEventListener('load', function(){
+  var pp = pixelPainter(32, 32);
+});
