@@ -8,7 +8,7 @@ html {
   font-family: 'Quicksand', sans-serif;
 }
 
-body h1, body #pixelPainter {
+body h1, body #main {
   background-color: lightsteelblue;
   border-radius: 8px;
   margin-top: 0px;
@@ -19,8 +19,13 @@ body h1, body #pixelPainter {
   box-shadow: 1px 1px 2px darkslateblue, -1px -1px 2px white;
 }
 
-#pixelPainter {
+#main {
   padding: 4px;
+}
+
+#pixelPainter {
+  width: 420px;
+  margin: auto;
 }
 
 .colorSwatch {
